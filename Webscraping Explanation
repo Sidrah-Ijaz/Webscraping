@@ -1,0 +1,53 @@
+Code Explanation Web scraping
+Let's break down each line of code to understand it in better way:
+
+1. `from bs4 import BeautifulSoup`: This line imports the `BeautifulSoup` class from the `bs4` module. `BeautifulSoup` is a Python library used for parsing HTML and XML documents.
+
+2. `import requests`: This line imports the `requests` module, which is a popular Python library used for making HTTP requests to web servers and retrieving data from web pages.
+
+3.`url= 'https://en.wikipedia.org/wiki/List_of_largest_companies_in_the_United_States_by_revenue'`: This line assigns the URL of the Wikipedia page listing the largest companies in the United States by revenue to the variable `url`.
+
+4. `page = requests.get(url)`: This line sends an HTTP GET request to the URL specified by the `url` variable using the `get()` method provided by the `requests` module. The response from the server is stored in the `page` variable.
+
+5.`soup=BeautifulSoup(page.text,'html')`:This line creates a `BeautifulSoup` object named `soup`. It takes two arguments: the first argument (`page.text`) is the HTML content of the web page retrieved in the previous step, and the second argument (`'html'`) specifies the parser to be used for parsing the HTML content.
+
+6. `print(soup)`: This line prints out the `soup` object, which represents the parsed HTML content of the web page. The `soup` object allows us to navigate and extract specific elements (e.g., tags, attributes, text) from the HTML document for further processing or analysis.
+7. soup.find('table') :searches for the first <table> element in the HTML document represented by the soup object.
+soup: This variable holds the BeautifulSoup object, which represents the parsed HTML content of the web page.
+.find('table'): This method searches for the first occurrence of the <table> tag within the HTML document. It returns a Tag object representing the first <table> element found, or None if no <table> element is present.
+8. `soup.find('table', class_='wikitable sortable')`: This line searches for the first `<table>` element in the HTML document represented by the `soup` object with the specified class attribute value of `'wikitable sortable'`. It returns a `Tag` object representing the first `<table>` element found with the specified class, or `None` if no such element is present.
+9. `table = soup.find_all('table')[1]`: This line retrieves all `<table>` elements from the HTML document represented by the `soup` object and selects the second table found (index `[1]`). It then assigns this table to the variable `table`.
+10. `print(table)`: This line prints out the `table` variable, which contains the HTML representation of the selected table from the web page. It helps to visually inspect the table retrieved from the web page.
+11. `world_titles = table.find_all('th')`: This line finds all `<th>` elements (table headers) within the `table` variable (selected table). It returns a list of `Tag` objects representing each table header.
+12. world_titles=
+’
+
+13. `world_table_titles = [title.text.strip() for title in world_titles]`: This line iterates through each `Tag` object in the `world_titles` list and extracts the text content of each table header using the `.text` attribute. It also removes leading and trailing whitespace characters from the extracted text using the `.strip()` method. The resulting list (`world_table_titles`) contains the text content of all table headers.
+
+14: print(world_table_titles): Print world titles.
+
+
+13. `import pandas as pd`: This line imports the `pandas` library and assigns it the alias `pd`. `pandas` is a popular Python library used for data manipulation and analysis, especially for handling tabular data.
+
+14. `df = pd.DataFrame(columns=world_table_titles)`: This line creates an empty DataFrame (`df`) with columns named according to the contents of the `world_table_titles` list. Each column represents a table header extracted earlier.
+
+15. `df`: This line prints the DataFrame `df`, providing a visual representation of the empty DataFrame structure.
+
+16. `column_data = table.find_all('tr')`: This line finds all `<tr>` elements (table rows) within the `table` variable (selected table). It returns a list of `Tag` objects representing each table row.
+
+*17. `for row in column_data[1:]:`:This line iterates through each table row in the `column_data` list, starting from the second row (index `1`) to skip the header row.
+
+18. `row_data = row.find_all('td')`: This line finds all `<td>` elements (table cells) within the current table row (`row`). It returns a list of `Tag` objects representing each table cell in the row.
+
+19. `individual_row_data = [data.text.strip() for data in row_data]`: This line iterates through each `Tag` object in the `row_data` list and extracts the text content of each table cell using the `.text` attribute. It also removes leading and trailing whitespace characters from the extracted text using the `.strip()` method. The resulting list (`individual_row_data`) contains the text content of all table cells in the current row.
+
+20. `length = len(df)`: This line calculates the current number of rows in the DataFrame `df`.
+
+*21. `df.loc[length] = individual_row_data`: This line appends the `individual_row_data` list as a new row to the DataFrame `df` at the specified index `length`.
+
+22. `df`: This line prints the DataFrame `df` after appending data from all rows, providing a visual representation of the populated DataFrame.
+
+23. `df.to_csv(r' C:\Pythonwebdata\Companies.csv', index=False)`: This line exports the DataFrame `df` to a CSV (Comma-Separated Values) file located at the specified file path (`C:\Pythonwebdata\Companies.csv'`). The `index=False` argument indicates that the DataFrame index should not be included in the exported CSV file.
+
+
+
